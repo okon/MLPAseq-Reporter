@@ -28,9 +28,6 @@ moveMe <- function(data, tomove, where = "last", ba = NULL) {
 ######MAIN########
 suppressPackageStartupMessages(library('ggplot2'));
 suppressPackageStartupMessages(library('getopt'));
-suppressPackageStartupMessages(library('xlsx'));
-suppressPackageStartupMessages(library('plyr'));
-suppressPackageStartupMessages(library('reshape'))
 suppressPackageStartupMessages(library('matrixStats'))
 
 #get options, using the spec as defined by the enclosed list.
