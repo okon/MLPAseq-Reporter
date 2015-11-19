@@ -70,7 +70,7 @@ probe pair and the fourth column is the corresponding sequence being genotyped (
     -V|--Version       Display script Version  
 ~~~  
 **Test run**
-
+Testing thingy
 
    
 
