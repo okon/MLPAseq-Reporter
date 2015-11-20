@@ -2,7 +2,7 @@
 ###MLPAbrary_analysis.R###
 #Takes in genotyping information produced by AmpliVar and creates a summary report for CNV
 
-VERSION="MLPAbrary_analysis.R Version: 0.6 Implemented by Olga Kondrashova 26/05/2015"
+VERSION="MLPAbrary_analysis.R Version: 0.6.1 Implemented by Olga Kondrashova 26/05/2015. Updated on 20/11/2015"
 
 #DEFINE Functions
 moveMe <- function(data, tomove, where = "last", ba = NULL) {
@@ -36,9 +36,9 @@ suppressPackageStartupMessages(library('matrixStats'))
 optmx <- matrix(c(
   'help', 'h', 0, "logical", "Print this helpful helpscreen",
   'InputDir', 'I', 1, "character", "Required: input directory of AmpliVar analysis with genotype files",
-  'ControlDir','C', 1, "character", "Required: directory with control samples - genotype files",
+  'ControlDir','C', 1, "character", "Optional: directory with control samples - genotype files",
   'OutputDir', 'O', 1, "character", "Required: output directory for summary reports",
-  'Suspects', 'S', 1, "character", "Usual suspects file used for MLPAbrary analysis",
+  'Suspects', 'S', 1, "character", "Required: usual suspects file used for MLPAbrary analysis",
   'verbose', 'v', 0, "logical", "Print progress messages",
   'Version', 'V',0, "logical","Display script Version"
 ),ncol=5,byrow=T)
@@ -64,8 +64,8 @@ usage <- function(){
 if ( !is.null(opt$help) ){ cat("\n",usage(),"\n"); q(status=0)};
 if ( !is.null(opt$Version) ){ cat(VERSION,"\n"); q(status=0)};
 if ( is.null(opt$InputDir) ){ cat("\nError: No Input directory defined \n"); cat(usage(), "\n"); q(status=1)};
-if ( is.null(opt$ControlDir) ){ cat("\nError: No control samples directory defined \n"); cat(usage(), "\n"); q(status=1)};
 if ( is.null(opt$OutputDir) ){ cat("\nError: No Output directory defined \n"); cat(usage(), "\n"); q(status=1)};
+if ( is.null(opt$Suspects) ){ cat("\nError: No suspects file defined \n"); cat(usage(), "\n"); q(status=1)};
 if (!is.null(opt$verbose)) {cat(paste(Sys.time(),"Starting MLPAbrary analysis for",opt$InputDir,"\n"))
                             cat(VERSION,"\n")
                             cat("Options:\n")
@@ -75,8 +75,13 @@ if (!is.null(opt$verbose)) {cat(paste(Sys.time(),"Starting MLPAbrary analysis fo
 ####load the MLPAbrary data
 
 #list files in the directory
-filenames=c(list.files(path=opt$InputDir,full.names=FALSE,recursive=FALSE),
-            list.files(path=opt$Control,full.names=FALSE,recursive=FALSE))
+if ( is.null(opt$ControlDir) ) {
+  filenames=list.files(path=opt$InputDir,full.names=FALSE,recursive=FALSE)
+} else {
+  filenames=c(list.files(path=opt$InputDir,full.names=FALSE,recursive=FALSE),
+              list.files(path=opt$Control,full.names=FALSE,recursive=FALSE))
+}
+
 
 #read in label columns
 mlpabrary=read.delim(opt$Suspects,header=FALSE)[c(1,3)]
