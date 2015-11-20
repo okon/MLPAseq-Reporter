@@ -83,6 +83,8 @@ To install MLPA-seq Reporter, simply download the package:
 
 * Move all genotypes files (files are located in a genotype subfolder with file ending - _merged_seqprep.fastq.fna_1_num_grp_Genotypes.txt) to one directory.  
 
+* Run MLPAbrary_analysis.R script:
+
         MLPAbrary_analysis.R [-[-help|h]] [-[-InputDir|I] <character>] [-[-ControlDir|C] <character>] 
         [-[-OutputDir|O] <character>] [-[-Suspects|S] <character>] [-[-verbose|v]] [-[-Version|V]]  
 
@@ -90,7 +92,7 @@ To install MLPA-seq Reporter, simply download the package:
   
     -h|--help          Print this helpful helpscreen  
     -I|--InputDir      Required: input directory of AmpliVar analysis with genotype files  
-    -C|--ControlDir    Required: directory with control samples - genotype files  
+    -C|--ControlDir    Optional: directory with control samples - genotype files  
     -O|--OutputDir     Required: output directory for summary reports  
     -S|--Suspects      Usual suspects file used for MLPAbrary analysis  
     -v|--verbose       Print progress messages  
